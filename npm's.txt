@@ -1,0 +1,6 @@
+discord.js
+chalk
+axios
+console-title
+fs
+

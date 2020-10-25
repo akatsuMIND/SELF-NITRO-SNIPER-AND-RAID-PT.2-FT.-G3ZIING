@@ -1,0 +1,142 @@
+//Livraria (Config)
+const Discord = require("discord.js");
+const { red, green, blue, yellow, cyan, magenta, bgBlue } = require('chalk');
+const moment = require('moment');
+const bot = new Discord.Client();
+const config = require('./config.json');
+const axios = require('axios').default;
+const setTitle = require('console-title');
+const center = require('center-align');
+
+//Configurações do bot
+var prefix = config.prefix
+var token = config.token
+var message_logger = config.message_logger
+
+
+//Painel
+console.log(red("                         ███╗   ██╗███████╗████████╗"));
+console.log(red("                         ████╗  ██║██╔════╝╚══██╔══╝"));
+console.log(red("                         ██╔██╗ ██║███████╗   ██║"));   
+console.log(red("                         ██║╚██╗██║╚════██║   ██║"));   
+console.log(red("                         ██║ ╚████║███████║   ██║ "));  
+console.log(red("                         ╚═╝  ╚═══╝╚══════╝   ╚═╝ "));  
+                           
+
+//Mensagem quando o bot estiver Online!
+
+bot.on('ready', () => { 
+    console.log(red('==============================================================================='))
+    console.log(" ")
+    });
+
+                                                  
+
+bot.on("message", message => {
+
+  if (message.author.id !== config.ID) return;
+
+let command = message.content.split(" ")[0];
+
+    command = command.slice(prefix.length);
+
+    let args = message.content.split(" ").slice(1);
+
+   if(message.content.startsWith(config.prefix) && message.author.id === config.ID) {
+
+   console.log("[" + green("+")  + "] :: "   + `Um comando foi feito: ${message.content}`)
+
+    try {
+
+        let commandFile = require(`./comandos/${command}.js`);
+      commandFile.run(bot, message, args);
+     
+
+    }   
+
+     catch (e) {
+         
+         console.log("[" + red("-") + "] :: "  +  `(ERROR 404) Ops! só avisando.. não foi possível acessar esse comando! | Comando: ${message.content}`)
+
+    }
+   }
+
+bot.on('message', message => {
+    function getDateTime() {
+
+        var date = new Date();
+    
+        var hour = date.getHours();
+        hour = (hour < 10 ? "0" : "") + hour;
+    
+        var min  = date.getMinutes();
+        min = (min < 10 ? "0" : "") + min;
+    
+        var sec  = date.getSeconds();
+        sec = (sec < 10 ? "0" : "") + sec;
+    
+    
+        return hour + ":" + min + ":" + sec;
+    
+    }
+    if(message.content.includes('discord.gift') || message.content.includes('discordapp.com/gifts/') || message.content.includes('discord.com/gifts')) {
+        var start = new Date()
+
+        if(message.channel.type == "dm") {
+            var bruh = "DM" 
+         } else {
+            var bruh = message.guild.name
+         }
+
+        var gift = /(discord\.(gift)|discordapp\.com\/gift)\/.+[a-z]/
+        var link = gift.exec(message.content);
+        if(!link) return;
+        var gcode = link[0].split('/')[1];
+
+        console.log("["  +  yellow("!")  +   "] :: "  +  `${getDateTime()} | Opa! meu sistema identificou um Discord Nitro (informações) | ${message.content}`);
+        console.log(`Server: ${bruh}`);
+        console.log(`Author: ${message.author.tag}`);
+        console.log(`Author ID: ${message.author.id}`);
+        var time = new Date() - start
+        console.log(`Tempo Decorrido: ${time}ms`);
+        console.log(" ");
+        axios({
+            method: 'POST',
+            url: `https://discordapp.com/api/v6/entitlements/gift-codes/${gcode}/redeem`, 
+            headers: 
+            {
+            'Authorization': bot.token 
+            }
+        }).then(
+            () => {console.log("["  +   green("+")  +   "] :: "   +   `Nitro reivindicado com sucesso! | ${bruh} | ${message.content}`);
+                    var sniped = sniped + 1
+                    setTitle(`(NITRO SNIPER) | Código: ${sniped}`);
+                }
+        ).catch(ex => console.log("["  +  red("-")  + "] :: "   +  `Não consegui pegar o código do nitro | (Error 404): Link Inválido, Fake, ou já foi pego.`))
+    
+      }
+    var chalk = require('chalk')
+
+   bot.on('message', message => {
+     if (message.embeds.length && message.author.id === "294882584201003009") {
+   if (message.embeds[0].description.match("React with")) {
+  message.react("🎉")
+  console.log(chalk.rgb(70, 181, 15).bold('GIVEAWAY SNIPER'))
+  console.log(chalk.hex("#FFB6C1")("Guild") + chalk.hex("#9400D3")(" | ") + chalk.hex("#FFA500")(`${message.guild.name}`))
+   console.log(chalk.hex("#FFB6C1")("Guild") + chalk.hex("#9400D3")(" | ") + chalk.hex("#FFA500")(message.guild.name + ` (${message.channel.id})`))
+  console.log(chalk.hex("#FFB6C1")("Guild") + chalk.hex("#9400D3")(" | ") + chalk.hex("#FFA500")(`https://discord.com/channels/${message.guild.id}/${message.channel.id}`))
+      console.log(chalk.rgb(255,20,147)('—————————————————————————————————————'))
+
+bot.on('warning', e => console.warn(e.stack));
+
+    }
+   }
+  })
+ });
+});
+
+setTimeout(() => {
+
+    bot.login(token)
+
+}, 1500)

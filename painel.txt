@@ -1,0 +1,18 @@
+console.log(green(`[SISTEMA] :: Conectado por: ${bot.user.tag}`));
+    console.log(green(`[SISTEMA] :: Prefix: ${config.prefix}`));
+    console.log(green(`[SISTEMA] :: Servidores: ${bot.guilds.size}`));
+    console.log(blue(`[SISTEMA] :: Usuários: ${bot.users.size}`));
+    console.log(blue(`[SISTEMA] :: Amigos: ${bot.user.friends.size}`))
+    console.log(blue(`[SISTEMA] :: Node: ${process.version}`))
+
+==
+
+console.log(magenta(`     ╦════════════════════════╦
+    ║                        ║
+    ║   Comandos: ${prefix}painel    ║
+    ║     by Family NST      ║
+    ║                        ║
+    ╩════════════════════════╩`))
+
+
+
